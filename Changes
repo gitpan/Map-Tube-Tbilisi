@@ -1,2 +1,13 @@
+0.02 2015-01-03T11:57:43+01:00
+ - Add EXAMPLE3 section to doc.
+ - Add Map::Tube::GraphViz, Map::Tube::Text::Table, Task::Map::Tube,
+   Map::Tube::Budapest, Map::Tube::Dnipropetrovsk, Map::Tube::Nanjing,
+   Map::Tube::Novosibirsk, Map::Tube::SaintPetersburg, Map::Tube::Vienna
+   and Map::Tube::Yekaterinburg to SEE ALSO section in doc.
+ - Add get_lines() method to doc.
+ - Add get_stations() method to doc.
+ - Remove executable bit from tbilisi-map.xml file.
+ - Update copyright years to 2015.
+
 0.01 2014-12-14T13:43:37+01:00
  - First version

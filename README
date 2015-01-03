@@ -5,9 +5,11 @@ SYNOPSIS
      use Map::Tube::Tbilisi;
      my $obj = Map::Tube::Tbilisi->new;
      my $routes_ar = $obj->get_all_routes($from, $to);
+     my $lines_ar = $obj->get_lines;
      my $station = $obj->get_node_by_id($station_id);
      my $station = $obj->get_node_by_name($station_name);
      my $route = $obj->get_shortest_route($from, $to);
+     my $stations_ar = $obj->get_stations($line);
      my $metro_name = $obj->name;
      my $xml_file = $obj->xml;
 
@@ -26,6 +28,10 @@ METHODS
              Get all routes from station to station.
              Returns reference to array with Map::Tube::Route objects.
 
+    "get_lines()"
+             Get lines in metro map.
+             Returns reference to array with Map::Tube::Line objects.
+
     "get_node_by_id($station_id)"
              Get station node by id.
              Returns Map::Tube::Node object.
@@ -41,6 +47,10 @@ METHODS
     "name()"
              Get metro name.
              Returns string with metro name.
+
+    "get_stations($line)"
+             Get list of stations for concrete metro line.
+             Returns reference to array with Map::Tube::Node objects.
 
     "xml()"
              Get XML specification of Tbilisi metro.
@@ -88,16 +98,49 @@ EXAMPLE2
      # Output like:
      # XML file: .*/tbilisi-map.xml
 
+EXAMPLE3
+     # Pragmas.
+     use strict;
+     use warnings;
+
+     # Modules.
+     use Map::Tube::GraphViz;
+     use Map::Tube::GraphViz::Utils qw(node_color_without_label);
+     use Map::Tube::Tbilisi;
+
+     # Object.
+     my $obj = Map::Tube::Tbilisi->new;
+
+     # GraphViz object.
+     my $g = Map::Tube::GraphViz->new(
+             'callback_node' => \&node_color_without_label,
+             'driver' => 'neato',
+             'tube' => $obj,
+     );
+
+     # Get graph to file.
+     $g->graph('Tbilisi.png');
+
+     # Print file.
+     system "ls -l Tbilisi.png";
+
+     # Output like:
+     # -rw-r--r-- 1 skim skim 68209 Jan  3 11:56 Tbilisi.png
+
 DEPENDENCIES
     File::Share, Map::Tube, Moo, namespace::clean.
 
 SEE ALSO
-    Map::Tube, Map::Tube::Barcelona, Map::Tube::Berlin,
-    Map::Tube::Bucharest, Map::Tube::Delhi, Map::Tube::Kazan,
-    Map::Tube::Kharkiv, Map::Tube::Kiev, Map::Tube::London,
-    Map::Tube::Minsk, Map::Tube::Moscow, Map::Tube::NYC, Map::Tube::Prague,
-    Map::Tube::Samara, Map::Tube::Sofia, Map::Tube::Tokyo,
-    Map::Tube::Warsaw.
+    Map::Tube, Map::Tube::GraphViz, Map::Tube::Text::Table, Task::Map::Tube.
+
+    Map::Tube::Barcelona, Map::Tube::Berlin, Map::Tube::Bucharest,
+    Map::Tube::Budapest, Map::Tube::Delhi, Map::Tube::Dnipropetrovsk,
+    Map::Tube::Kazan, Map::Tube::Kharkiv, Map::Tube::Kiev,
+    Map::Tube::London, Map::Tube::Minsk, Map::Tube::Moscow, Map::Tube::NYC,
+    Map::Tube::Nanjing, Map::Tube::Novosibirsk, Map::Tube::Prague,
+    Map::Tube::SaintPetersburg, Map::Tube::Samara, Map::Tube::Sofia,
+    Map::Tube::Tokyo, Map::Tube::Vienna, Map::Tube::Warsaw,
+    Map::Tube::Yekaterinburg.
 
 REPOSITORY
     <https://github.com/tupinek/Map-Tube-Tbilisi>
@@ -108,10 +151,10 @@ AUTHOR
     <http://skim.cz>
 
 LICENSE AND COPYRIGHT
-     © 2014 Michal Špaček
+     © 2014-2015 Michal Špaček
      Artistic License
      BSD 2-Clause License
 
 VERSION
-    0.01
+    0.02
 
